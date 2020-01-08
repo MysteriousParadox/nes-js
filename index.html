@@ -4,9 +4,7 @@
     <script type="text/javascript" src="build/nes.js"></script>
     <script type="text/javascript">
       var nes;
-
       // buttons status update methods
-
       /**
        *
        */
@@ -21,7 +19,6 @@
         document.getElementById('stepButton').disabled = true;
         document.getElementById('resumeButton').disabled = true;
       }
-
       /**
        *
        */
@@ -36,7 +33,6 @@
         document.getElementById('stepButton').disabled = true;
         document.getElementById('resumeButton').disabled = true;
       }
-
       /**
        *
        */
@@ -51,7 +47,6 @@
         document.getElementById('stepButton').disabled = true;
         document.getElementById('resumeButton').disabled = true;
       }
-
       /**
        *
        */
@@ -66,35 +61,27 @@
         document.getElementById('stepButton').disabled = false;
         document.getElementById('resumeButton').disabled = false;
       }
-
       // 
-
       /**
        *
        */
       function loadRom() {
         var url = document.getElementById('romList').selectedOptions[0].value;
-
         var request = new XMLHttpRequest();
         request.responseType = 'arraybuffer';
-
         request.onload = function() {
           putMessage('Loading done.');
           run(request.response);
         };
-
         request.onerror = function(e) {
           putMessage('failed to load.');
         };
-
         request.open('GET', url, true);
         request.send(null);
-
         putMessage('')
         putMessage('Loading rom image...')
         ROMloaded();
       }
-
       /**
        *
        */
@@ -106,43 +93,31 @@
           putMessage(e.toString());
           return;
         }
-
         putMessage('');
         putMessage('Rom Header info');
         putMessage(rom.header.dump());
-
         nes = new NesJs.Nes();
-
         nes.addEventListener('fps', function(fps) {
           document.getElementById('fps').innerText = fps.toFixed(2);
         });
-
         nes.setRom(rom);
-
         nes.setDisplay(new NesJs.Display(document.getElementById('mainCanvas')));
-
         try {
           nes.setAudio(new NesJs.Audio());
         } catch(e) {
           putMessage('');
           putMessage('Disables audio because this browser does not seems to support WebAudio.');
         }
-
         window.onkeydown = function(e) { nes.handleKeyDown(e); };
         window.onkeyup = function(e) { nes.handleKeyUp(e); };
-
         putMessage('');
-
         putMessage('bootup.');
         nes.bootup();
-
         putMessage('runs.');
         NESran();
         nes.run();
       }
-
       // put message methods
-
       /**
        *
        */
@@ -151,16 +126,13 @@
         area.firstChild.appendData(str + '\n');
         area.scrollTop = area.scrollHeight;
       }
-
       // push button handlers
-
       /**
        *
        */
       function pushDumpROM() {
         putMessage(nes.dumpRom());
       }
-
       /**
        *
        */
@@ -168,28 +140,24 @@
         putMessage(nes.dumpCpu());
         putMessage(nes.dumpPpu());
       }
-
       /**
        *
        */
       function pushDumpRAM() {
         putMessage(nes.dumpRam());
       }
-
       /**
        *
        */
       function pushDumpVRAM() {
         putMessage(nes.dumpVRam());
       }
-
       /**
        *
        */
       function pushDumpSPRRAM() {
         putMessage(nes.dumpSprRam());
       }
-
       /**
        *
        */
@@ -198,7 +166,6 @@
         putMessage('stopped.');
         NESstopped();
       }
-
       /**
        *
        */
@@ -206,7 +173,6 @@
         nes.runStep();
         putMessage(nes.dumpCpu());
       }
-
       /**
        *
        */
@@ -215,63 +181,49 @@
         putMessage('resumed.');
         NESran();
       }
-
       // press/release pad button handlers
-
       /**
        *
        */
       function pressPadButton(key) {
         if(nes === undefined)
           return;
-
         nes.pad1.pressButton(key);
       }
-
       /**
        *
        */
       function releasePadButton(key) {
         if(nes === undefined)
           return;
-
         nes.pad1.releaseButton(key);
       }
-
       // drag/drop handlers
-
       /**
        *
        */
       function dragOverHandler(e) {
         e.preventDefault();
       }
-
       /**
        *
        */
       function dropHandler(e) {
         e.preventDefault();
-
         var reader = new FileReader();
-
         reader.onload = function(e) {
           putMessage('Loading done.');
           run(e.target.result);
         };
-
         reader.onerror = function(e) {
           for(var key in reader.error) {
             putMessage(key + '=' + reader.error[key]);
           }
         };
-
         reader.readAsArrayBuffer(e.dataTransfer.files[0]);
-
         putMessage('')
         putMessage('Loading rom image...')
       }
-
       window.addEventListener('drop', dropHandler, false);
       window.addEventListener('dragover', dragOverHandler, false);
     </script>
@@ -279,7 +231,11 @@
   <body onload="init()">
     <p>
       <select id="romList">
+        <option value="./roms/nestest.nes">nestest</option>
         <option value="./roms/Sgt. Helmet - Training Day (2013)(The Mojon Twins)[!].nes" selected>Sgt. Helmet</option>
+        <option value="./roms/pong1k.nes">pong1k</option>
+        <option value="./roms/The Invasion.nes">The Invasion</option>
+        <option value="./roms/mguard.nes">mguard</option>
       </select>
       <button id="loadROMButton" onclick="loadRom()">load rom</button><br />
       Select rom from the list or drag and drop your own rom into this window to start.
@@ -330,12 +286,33 @@
         </tr>
       </table>
     </div>
-    
-<style>
- body {
-  background-color: coral;
-} 
-</style>  
-    
+
+    <p>
+      <div>
+        <button id="dumpROMButton" onclick="pushDumpROM()">dump ROM</button>
+        <button id="dumpRegButton" onclick="pushDumpReg()">dump CPU/PPU reg</button>
+        <button id="dumpRAMButton" onclick="pushDumpRAM()">dump CPU RAM</button>
+        <button id="dumpVRAMButton" onclick="pushDumpVRAM()">dump PPU VRAM</button>
+        <button id="dumpSPRRAMButton" onclick="pushDumpSPRRAM()">dump PPU SPRRAM</button>
+        <button id="stopButton" onclick="pushStopButton()">stop</button>
+        <button id="stepButton" onclick="pushStepButton()">step</button>
+        <button id="resumeButton" onclick="pushResumeButton()">resume</button>
+      </div>
+      <textarea id="dump" cols="128" rows="16" readonly="readonly"> </textarea>
+    </p>
+
+    <p>
+      Thanks for the public domain NES roms.
+    </p>
+    <ul>
+      <li><a href="http://pdroms.de/category/nintendoentertainmentsystem">http://pdroms.de/category/nintendoentertainmentsystem</a></li>
+      <li><a href="http://slydogstudios.org/index.php/1k-series/">http://slydogstudios.org/index.php/1k-series/</a></li>
+      <li><a href="http://www.mojontwins.com/juegos_mojonos/sgt-helmet-training-day-nes/">http://www.mojontwins.com/juegos_mojonos/sgt-helmet-training-day-nes/</a></li>
+    </ul>
+
+    <p>
+      <a href="https://github.com/takahirox/nes-js">Source code at GitHub</a>
+    </p>
+
   </body>
 </html>
