@@ -1,6 +1,7 @@
 # nes-js
 
 This is JavaScript NES(Famicom) emulator which runs on browser.
+Originally programmed by takahirox. Forked by Mysterious P4R4D0X
 
 ## Demo
 
@@ -64,8 +65,10 @@ This is JavaScript NES(Famicom) emulator which runs on browser.
     <canvas id="gameCanvas" width="256" height="240"></canvas>
   </p>
 </body>
-```
 
+*NOTE*
+The following code above does not work.
+```
 ## NPM
 
 ### How to install
