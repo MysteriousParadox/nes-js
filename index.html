@@ -279,11 +279,7 @@
   <body onload="init()">
     <p>
       <select id="romList">
-        <option value="./roms/nestest.nes">nestest</option>
         <option value="./roms/Sgt. Helmet - Training Day (2013)(The Mojon Twins)[!].nes" selected>Sgt. Helmet</option>
-        <option value="./roms/pong1k.nes">pong1k</option>
-        <option value="./roms/The Invasion.nes">The Invasion</option>
-        <option value="./roms/mguard.nes">mguard</option>
       </select>
       <button id="loadROMButton" onclick="loadRom()">load rom</button><br />
       Select rom from the list or drag and drop your own rom into this window to start.
@@ -334,33 +330,12 @@
         </tr>
       </table>
     </div>
-
-    <p>
-      <div>
-        <button id="dumpROMButton" onclick="pushDumpROM()">dump ROM</button>
-        <button id="dumpRegButton" onclick="pushDumpReg()">dump CPU/PPU reg</button>
-        <button id="dumpRAMButton" onclick="pushDumpRAM()">dump CPU RAM</button>
-        <button id="dumpVRAMButton" onclick="pushDumpVRAM()">dump PPU VRAM</button>
-        <button id="dumpSPRRAMButton" onclick="pushDumpSPRRAM()">dump PPU SPRRAM</button>
-        <button id="stopButton" onclick="pushStopButton()">stop</button>
-        <button id="stepButton" onclick="pushStepButton()">step</button>
-        <button id="resumeButton" onclick="pushResumeButton()">resume</button>
-      </div>
-      <textarea id="dump" cols="128" rows="16" readonly="readonly"> </textarea>
-    </p>
-
-    <p>
-      Thanks for the public domain NES roms.
-    </p>
-    <ul>
-      <li><a href="http://pdroms.de/category/nintendoentertainmentsystem">http://pdroms.de/category/nintendoentertainmentsystem</a></li>
-      <li><a href="http://slydogstudios.org/index.php/1k-series/">http://slydogstudios.org/index.php/1k-series/</a></li>
-      <li><a href="http://www.mojontwins.com/juegos_mojonos/sgt-helmet-training-day-nes/">http://www.mojontwins.com/juegos_mojonos/sgt-helmet-training-day-nes/</a></li>
-    </ul>
-
-    <p>
-      <a href="https://github.com/takahirox/nes-js">Source code at GitHub</a>
-    </p>
-
+    
+<style>
+ body {
+  background-color: coral;
+} 
+</style>  
+    
   </body>
 </html>
