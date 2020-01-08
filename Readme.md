@@ -68,21 +68,6 @@ Originally programmed by takahirox. Forked by Mysterious P4R4D0X
 
 *NOTE*
 The following code above does not work.
-```
-## NPM
-
-### How to install
-
-```
-$ npm install nes-js
-```
-
-### How to build
-
-```
-$ npm install
-$ npm run all
-```
 
 ## Default key configuration
 
